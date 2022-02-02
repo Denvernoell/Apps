@@ -80,8 +80,8 @@ option.add_argument('--headless')
 s = Service(r"D:\Drive\Blog\Dependencies\chromedriver.exe")
 # driver = webdriver.Chrome(service=s)
 driver = webdriver.Chrome(
-    executable_path=r"D:\Drive\Blog\Dependencies\chromedriver.exe",
-    options=option)
+    # executable_path=r"D:\Drive\Blog\Dependencies\chromedriver.exe",options=option)
+    executable_path=r"chromedriver.exe", options=option)
 
 
 st.set_page_config(
