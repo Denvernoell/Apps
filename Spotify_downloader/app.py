@@ -32,7 +32,9 @@ if st.button('Download'):
 
     # os.system(f"spotdl {URI}"
     #           + r" --ffmpeg C:\Users\dnoell\Documents\ShareX\Tools\ffmpeg.exe")
+
     os.system(f"spotdl {URI}")
+
     #   + r" --ffmpeg C:\Users\dnoell\Documents\ShareX\Tools\ffmpeg.exe")
     #       " --path-template '{artist}/{album}/{title}.{ext}'"
     st.success("Downloaded")
