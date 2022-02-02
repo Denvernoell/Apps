@@ -17,7 +17,10 @@ option.add_argument('--headless')
 # s = Service(r"chromedriver.exe")
 # driver = webdriver.Chrome(s, options=option)
 
-driver = webdriver.Chrome(executable_path=r"chromedriver.exe", options=option)
+# driver = webdriver.Chrome(executable_path=r"chromedriver.exe", options=option)
+driver = webdriver.Firefox()
+
+
 #     executable_path=r"chromedriver.exe", options=option)
 
 
@@ -40,7 +43,7 @@ p_rarity = ['Zon', 'Hoz', 'Compono', 'Klin']
 c_genders = st.multiselect('Gender', p_genders, default=p_genders)
 c_breeds = st.multiselect('Breed', p_breeds, default=p_breeds)
 c_rarity = st.multiselect('Rarity', p_rarity, default=p_rarity)
-max_price = st.number_input("Max Price (USDT)", value=1000, step=1)
+max_price = st.number_input("Max Price (USDT)", value=1000, step=100)
 my_email = st.text_input("Email")
 # my_email = "Denvernoell@gmail.com"
 
