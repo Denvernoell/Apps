@@ -1,87 +1,24 @@
 # from email.policy import default
+from pega_search import Store, Horse
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import time
 import streamlit as st
-# from send_email import email_alert
+from send_email import email_alert
 
 
-# from my_secrets import username, app_password
-import smtplib
-from email.message import EmailMessage
-
-
-def email_alert(to, subject, body, email='personal'):
-    msg = EmailMessage()
-    msg.set_content(body)
-    msg['Subject'] = subject
-    msg['to'] = to
-
-    # From denvernoell@gmail.com
-    if email == 'personal':
-
-        msg['from'] = username
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-
-    # From apps@denvernoell.com
-    elif email == 'apps':
-        msg['from'] = 'apps@denvernoell.com'
-        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-
-    server.login(username, app_password)
-    server.send_message(msg)
-    server.quit()
-
-
-class Store:
-    def __init__(self, driver):
-
-        self.driver = driver
-        self.num_horses = len(driver.find_elements(
-            'class name', 'content-name-title'))
-        self.horses = [Horse(driver, i) for i in range(
-            self.num_horses-1) if type(Horse(driver, i).price) == int]
-
-
-class Horse:
-    def __init__(self, driver, i):
-        self.driver = driver
-        price = (driver.find_elements(
-            'class name', 'content-name-title')[i].text)
-        name = (driver.find_elements('class name', 'item-info-title')[i].text)
-        rarity, breed_type, gender = (driver.find_elements(
-            'class name', 'item-info-meta')[i].text).replace(' ', '').split('•')
-
-        auction_link = driver.find_elements('tag name', 'a')[
-            i].get_attribute('href')
-
-        try:
-            self.price = int(price.replace(',', ''))
-        except:
-            self.price = price
-        self.name = name
-        self.rarity = rarity
-        self.breed_type = breed_type
-        self.gender = gender
-        self.auction_link = auction_link
-
-
-# from email.mime.multipart import MIMEMultipart
-# from email.mime.text import MIMEText
-# import markdown
-# import plyer
 option = webdriver.ChromeOptions()
 option.add_argument('--headless')
 # option.add_argument('--no-sandbox')
 # option.add_argument('--disable-dev-sh-usage')
 
 
-s = Service(r"D:\Drive\Blog\Dependencies\chromedriver.exe")
-# driver = webdriver.Chrome(service=s)
-driver = webdriver.Chrome(
-    # executable_path=r"D:\Drive\Blog\Dependencies\chromedriver.exe",options=option)
-    executable_path=r"chromedriver.exe", options=option)
+# s = Service(r"D:\Drive\Blog\Dependencies\chromedriver.exe")
+# s = Service(r"chromedriver.exe")
+# driver = webdriver.Chrome(s, options=option)
+
+driver = webdriver.Chrome(executable_path=r"chromedriver.exe", options=option)
+#     executable_path=r"chromedriver.exe", options=option)
 
 
 st.set_page_config(
@@ -171,7 +108,8 @@ Link: {horse.auction_link}
             email_alert(
                 to=my_email,
                 subject="Pegas for you",
-                body=message)
+                body=message,
+                email='apps')
 
             found = True
             st.success("Message sent")
